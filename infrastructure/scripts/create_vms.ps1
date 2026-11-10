@@ -135,3 +135,4 @@ if ($existingVms -match '"server2"') {
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "  VM Provisioning Completed Successfully!" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
+

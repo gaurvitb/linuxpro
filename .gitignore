@@ -1,18 +1,78 @@
-# Dependencies
-node_modules/
+# =============================================================================
+# LINUXPULSE — .gitignore
+# =============================================================================
+
+# ── Python ────────────────────────────────────────────────────────────────────
 backend/venv/
-backend/__pycache__/
-backend/*/__pycache__/
-backend/*/*/__pycache__/
-*.pyc
+backend/.venv/
+__pycache__/
+backend/**/__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.Python
 
-# Build outputs
+# ── Node / Frontend ───────────────────────────────────────────────────────────
+frontend/node_modules/
 frontend/dist/
+frontend/dist-ssr/
 frontend/.tmp/
+frontend/.cache/
+*.local
 
-# Logs & Environment
+# ── Environment & Secrets ─────────────────────────────────────────────────────
 .env
+.env.local
+.env.*.local
+*.env
+# Keep the example template
+!.env.example
+
+# ── SSH Private Keys (never commit) ──────────────────────────────────────────
+*.pem
+*.key
+id_rsa
+id_ed25519
+id_ecdsa
+id_dsa
+*.ppk
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
 *.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
+# ── Test / Coverage ───────────────────────────────────────────────────────────
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.bak
+*.tmp
+*.swp
+~$*
