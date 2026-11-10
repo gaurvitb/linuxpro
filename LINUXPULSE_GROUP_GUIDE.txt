@@ -1,0 +1,273 @@
+================================================================================
+LINUXPULSE — GROUP MEMBER HANDOVER & EXECUTION GUIDE
+Enterprise Linux Server Administration & Infrastructure Monitoring Platform
+================================================================================
+
+Welcome to the LINUXPULSE project team! This guide contains everything you need
+to clone our project, run the existing web application, set up the required
+Red Hat Enterprise Linux (RHEL) virtual machines, and finish the project.
+
+--------------------------------------------------------------------------------
+1. PROJECT OVERVIEW
+--------------------------------------------------------------------------------
+
+What is LINUXPULSE?
+LINUXPULSE is an enterprise-grade infrastructure management and observability
+platform. It was created to automate, monitor, and verify all 12 system
+administration tasks from the Project 10 RHEL Server Administration Capstone
+(Project10_RHEL_Server_Administration_Guide.pdf).
+
+Architecture:
+- Server 1 (server1.example.com - 192.168.56.11):
+  Infrastructure Server: LVM storage (vg_data), NFS Server (/data/share),
+  Apache Web Server (Port 82), firewalld, SELinux enforcing, automated
+  nightly tar.gz backups, and SSH hardening.
+- Server 2 (server2.example.com - 192.168.56.12):
+  Client & Container Server: autofs on-demand NFS client (/mnt/nfs/share),
+  SSH key authentication client, and rootless Podman UBI9 container (Port 8081).
+- LINUXPULSE Web Platform:
+  Observability dashboard that monitors both servers, visualizes storage
+  topology, executes allowlisted diagnostic commands, and audits reboot persistence.
+
+Technologies Used:
+- Frontend: React 19, TypeScript, Tailwind CSS v4, Lucide Icons, Recharts, Vite.
+- Backend: Python 3.10+, FastAPI, Pydantic v2, Paramiko (SSH), Uvicorn.
+- Linux Environment: RHEL 9/10, systemd, NetworkManager, LVM, XFS, NFSv4,
+  autofs, Apache HTTPD, SELinux, firewalld, OpenSSH, Podman, journalctl.
+
+What Has Already Been Developed:
+- Complete React frontend with 17 dedicated enterprise pages (100% built).
+- Complete FastAPI backend with 18 REST API endpoints and dual LIVE/DEMO modes.
+- Complete automated Bash scripts for Server 1 and Server 2.
+- Complete golden configuration files (fstab, exports, autofs, Apache, sshd).
+- Task 12 automated reboot verification script (verify_all.sh).
+- Automated VirtualBox VM provisioning script (create_vms.ps1 / create_vms.bat).
+- Comprehensive 10-section Capstone Master Report in docs/.
+
+--------------------------------------------------------------------------------
+2. GITHUB CLONING & LOCAL SETUP
+--------------------------------------------------------------------------------
+
+Repository URL:
+https://github.com/gaurvitb/linuxpro.git
+
+Step 1: Install Git (if not installed)
+- Download Git for Windows/Mac/Linux: https://git-scm.com/downloads
+- Follow standard setup prompts (keep defaults).
+
+Step 2: Clone the Project
+Open Terminal (macOS/Linux) or PowerShell/Command Prompt (Windows) and run:
+  git clone https://github.com/gaurvitb/linuxpro.git
+  cd linuxpro
+
+Step 3: Open in Antigravity
+- Launch Antigravity.
+- Click File -> Open Folder.
+- Select the cloned "linuxpro" folder.
+
+Step 4: Run the Application (Demo Mode — No VMs required yet)
+Option A (Fastest on Windows):
+  Double-click "start_all.bat" in the root directory.
+  This automatically starts both backend (port 8000) and frontend (port 5173).
+
+Option B (Manual Terminal Start):
+  Terminal 1 (Backend):
+    cd backend
+    python -m venv venv
+    .\venv\Scripts\activate      (On Linux/Mac: source venv/bin/activate)
+    pip install -r requirements.txt
+    python -m uvicorn app.main:app --reload --port 8000
+
+  Terminal 2 (Frontend):
+    cd frontend
+    npm install --legacy-peer-deps
+    npm run dev
+
+Access the Web Platform:
+- Web Dashboard: http://localhost:5173
+- Swagger API Docs: http://localhost:8000/docs
+
+--------------------------------------------------------------------------------
+3. CURRENT COMPLETION STATUS
+--------------------------------------------------------------------------------
+
+Honest Completion Breakdown:
+- Code & Software Architecture: 100% COMPLETE
+- Frontend Implementation (17 pages): 100% COMPLETE & TESTED (0 build errors)
+- Backend API (18 endpoints): 100% COMPLETE & TESTED (18/18 HTTP 200 in Demo mode)
+- Infrastructure Provisioning Scripts: 100% WRITTEN & COMMITTED
+- Golden Configuration Files: 100% WRITTEN & COMMITTED
+- Physical RHEL Virtual Machine Setup: 0% — PENDING (VMs not yet created/installed)
+- Live VM Telemetry Execution: 0% — PENDING (Requires running RHEL VMs)
+
+OVERALL PROJECT PROGRESS: ~75%
+(The entire software platform is done. Only the physical VM installation and
+live execution remain to reach 100%.)
+
+What is Tested:
+- Vite + TypeScript compilation (passes with 0 errors).
+- FastAPI backend routes, schemas, and allowlisted execution engine.
+- Dual-mode architecture (Demo Mode simulates realistic RHEL telemetry).
+
+What is NOT Tested:
+- Live SSH execution against running RHEL 9/10 virtual machines.
+- Actual kernel mounting of LVM volumes and NFS autofs triggers.
+- Live Task 12 post-reboot verification script output on physical VMs.
+
+--------------------------------------------------------------------------------
+4. WHAT NEEDS TO BE DOWNLOADED
+--------------------------------------------------------------------------------
+
+Before you can run the live infrastructure, download and install the following:
+
+1. Oracle VirtualBox 7.x
+   - Link: https://www.virtualbox.org/wiki/Downloads
+   - Why: Required hypervisor to run the two virtual machines (server1 & server2).
+
+2. Red Hat Enterprise Linux (RHEL) 9 or 10 DVD ISO (~8-9 GB)
+   - Link: https://developers.redhat.com/products/rhel/download
+   - Why: The operating system specified in Project 10 guide.
+   - Cost: 100% FREE with a Red Hat Developer account (takes 1 minute to register).
+   - File to get: "Red Hat Enterprise Linux DVD ISO" (x86_64).
+
+3. Python 3.10+ (tested up to 3.14)
+   - Link: https://www.python.org/downloads/
+   - Why: Runs the FastAPI telemetry backend.
+   - Note: During Windows install, check "Add Python to PATH".
+
+4. Node.js v18+ (tested on v22)
+   - Link: https://nodejs.org/
+   - Why: Runs the React 19 / Vite frontend dashboard.
+
+--------------------------------------------------------------------------------
+5. REMAINING WORK — STEP BY STEP
+--------------------------------------------------------------------------------
+
+Follow these steps in order to complete the remaining 25% of the project:
+
+STEP 1: Create the Virtual Machines in VirtualBox
+Use the automated script provided in the repository:
+  .\infrastructure\scripts\create_vms.bat
+Or run manually in VirtualBox:
+- server1.example.com:
+  * RAM: 2048 MB, CPUs: 2
+  * Primary Disk: 20 GB (for OS)
+  * Secondary Disk: 5 GB (for LVM - /dev/sdb)
+  * Network Adapter 1: Host-Only Adapter (192.168.56.0/24 network)
+  * Network Adapter 2: NAT (for package downloads)
+- server2.example.com:
+  * RAM: 2048 MB, CPUs: 2
+  * Primary Disk: 20 GB (for OS)
+  * Network Adapter 1: Host-Only Adapter (192.168.56.0/24 network)
+  * Network Adapter 2: NAT (for package downloads)
+
+STEP 2: Install RHEL 9/10 on Both VMs
+- Mount the RHEL DVD ISO and boot each VM.
+- Set Hostname:
+  * VM 1: server1.example.com
+  * VM 2: server2.example.com
+- User Account: Create admin user "admin1" with sudo/wheel privileges.
+- Base Environment: "Server with GUI" or "Minimal Install + Standard Tools".
+
+STEP 3: Configure Static Networking (Task 1)
+- On server1:
+  IP: 192.168.56.11/24, Gateway: 192.168.56.1
+- On server2:
+  IP: 192.168.56.12/24, Gateway: 192.168.56.1
+- Add both to /etc/hosts on both machines:
+  192.168.56.11  server1.example.com  server1
+  192.168.56.12  server2.example.com  server2
+- Test: ping -c 2 server1 (from server2) and ping -c 2 server2 (from server1).
+
+STEP 4: Run Provisioning Scripts (Tasks 2 to 11)
+All configuration commands have already been scripted for you!
+
+On server1 (Tasks 2, 3, 4, 5, 6, 7, 8, 9, 10):
+  scp -r infrastructure/server1 admin1@192.168.56.11:~/
+  ssh admin1@192.168.56.11
+  sudo bash ~/server1/setup_all_server1.sh
+
+On server2 (Tasks 1, 2, 4, 8, 11):
+  scp -r infrastructure/server2 admin1@192.168.56.12:~/
+  ssh admin1@192.168.56.12
+  sudo bash ~/server2/setup_all_server2.sh
+
+STEP 5: Run Post-Reboot Verification (Task 12)
+- Reboot both servers: sudo reboot
+- After reboot, run the verification script:
+  sudo bash infrastructure/scripts/verify_all.sh
+- Confirm all 12 audit checks pass with green checkmarks.
+
+STEP 6: Connect LINUXPULSE to Live Infrastructure
+- Ensure SSH key for admin1 is present on your host machine (~/.ssh/id_ed25519).
+- Open LINUXPULSE dashboard at http://localhost:5173.
+- Go to "Settings" page -> Switch Mode from "DEMO" to "LIVE".
+- Verify that live telemetry reflects your real RHEL virtual machines!
+
+STEP 7: Evidence Collection & Screenshots
+Take screenshots of:
+1. LINUXPULSE Overview dashboard in LIVE mode showing both servers online.
+2. LVM Storage visualizer showing lv_share, lv_web, lv_backup.
+3. Web Server preview loading Apache on Port 82.
+4. NFS & Autofs page showing active mount.
+5. Verification page showing 100% reboot verification score.
+6. Terminal output of verify_all.sh.
+
+--------------------------------------------------------------------------------
+6. ANTIGRAVITY AI PROMPT
+--------------------------------------------------------------------------------
+
+Copy and paste the exact prompt below into your Antigravity chat window after
+cloning the repository:
+
+============================== COPY BELOW THIS LINE ==============================
+I have cloned our group's LINUXPULSE project repository from:
+https://github.com/gaurvitb/linuxpro.git
+
+Please act as a Senior Linux Systems Administrator and DevOps Engineer.
+
+Your task is to help me resume and finalize this project.
+
+RULES:
+1. Treat the cloned repository and Project10_RHEL_Server_Administration_Guide.pdf
+   as the absolute source of truth.
+2. DO NOT delete, rebuild, or restructure the existing React frontend or FastAPI backend.
+   The software is 100% written and already passing all tests.
+3. Inspect the current codebase first: read README.md, LINUXPULSE_GROUP_GUIDE.txt,
+   and docs/LINUXPULSE_MASTER_PROJECT_REPORT.md to understand what exists.
+4. Help me complete the pending infrastructure tasks:
+   - Check if VirtualBox is installed and configure the Host-Only network (192.168.56.0/24).
+   - Guide me through downloading the RHEL 9/10 ISO from Red Hat Developer.
+   - Run infrastructure/scripts/create_vms.ps1 to provision server1 and server2 VMs.
+   - Guide me through RHEL installation and network verification.
+   - Execute infrastructure/server1/setup_all_server1.sh on server1.
+   - Execute infrastructure/server2/setup_all_server2.sh on server2.
+   - Run infrastructure/scripts/verify_all.sh for Task 12 reboot verification.
+   - Switch LINUXPULSE backend from DEMO mode to LIVE mode and verify real telemetry.
+   - Help me capture all required screenshots and evidence for final submission.
+
+Start by inspecting the cloned workspace and summarizing the next immediate action for me.
+============================== COPY ABOVE THIS LINE ==============================
+
+--------------------------------------------------------------------------------
+7. FINAL CHECKLIST (BEFORE DECLARING 100% FINISHED)
+--------------------------------------------------------------------------------
+
+[ ] Git repository cloned from https://github.com/gaurvitb/linuxpro.git
+[ ] VirtualBox 7.x installed with Host-Only network (192.168.56.1/24)
+[ ] RHEL 9 or 10 DVD ISO downloaded
+[ ] server1 VM created (20 GB OS disk + 5 GB secondary disk for LVM)
+[ ] server2 VM created (20 GB OS disk)
+[ ] Both VMs running with static IPs (192.168.56.11 and 192.168.56.12)
+[ ] Bidirectional ping and SSH key authentication working between servers
+[ ] setup_all_server1.sh executed on server1 without errors
+[ ] setup_all_server2.sh executed on server2 without errors
+[ ] Both servers rebooted and verify_all.sh executed with 12/12 checks passing
+[ ] LINUXPULSE backend switched to LIVE mode
+[ ] Dashboard verified live with real metrics from server1 and server2
+[ ] Screenshots collected and added to docs/evidence/
+[ ] Final project report reviewed and submitted
+
+================================================================================
+END OF GUIDE — LINUXPULSE TEAM
+================================================================================
