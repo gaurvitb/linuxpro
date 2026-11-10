@@ -1,0 +1,5 @@
+# ==============================================================================
+# LINUXPULSE - Task 4: Autofs Direct Map for NFS Shares
+# Target: /etc/auto.nfs on server2.example.com
+# ==============================================================================
+share   -rw,sync,soft   server1:/data/share

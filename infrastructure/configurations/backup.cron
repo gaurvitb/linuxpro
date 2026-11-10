@@ -1,0 +1,6 @@
+# ==============================================================================
+# LINUXPULSE - Task 9: Nightly Backup Cron Job
+# Target: /etc/cron.d/backup on server1.example.com
+# Schedule: Daily at 02:00 AM by root
+# ==============================================================================
+0 2 * * * root /usr/local/bin/backup.sh

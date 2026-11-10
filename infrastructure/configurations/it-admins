@@ -1,0 +1,6 @@
+# ==============================================================================
+# LINUXPULSE - Task 2: Delegated Sudoers Rule for IT Group
+# Target: /etc/sudoers.d/it-admins on server1.example.com
+# Permissions: 0440 (validated with visudo -cf)
+# ==============================================================================
+%it ALL=(ALL) /usr/bin/systemctl restart httpd, /usr/bin/systemctl status httpd
