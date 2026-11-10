@@ -160,3 +160,4 @@ def get_reboot_verification():
 @router.post("/operations/execute", response_model=OperationResult)
 def execute_operation(op: OperationRequest):
     return infra_service.execute_operation(op.operation_id, op.server_id, confirm=op.confirm)
+

@@ -4,3 +4,4 @@
 # Permissions: 0440 (validated with visudo -cf)
 # ==============================================================================
 %it ALL=(ALL) /usr/bin/systemctl restart httpd, /usr/bin/systemctl status httpd
+

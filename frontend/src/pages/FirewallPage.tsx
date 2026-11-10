@@ -92,3 +92,4 @@ export const FirewallPage: React.FC<FirewallPageProps> = ({ data, onRefresh }) =
     </div>
   );
 };
+

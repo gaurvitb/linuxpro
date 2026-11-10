@@ -6,3 +6,4 @@ Write-Host "===================================================" -ForegroundColo
 Set-Location "$PSScriptRoot\frontend"
 Write-Host "Starting Vite development server on http://localhost:5173" -ForegroundColor Green
 npm run dev
+

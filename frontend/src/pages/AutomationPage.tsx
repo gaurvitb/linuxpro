@@ -243,3 +243,4 @@ export const AutomationPage: React.FC<AutomationPageProps> = ({ onRefresh }) => 
     </div>
   );
 };
+

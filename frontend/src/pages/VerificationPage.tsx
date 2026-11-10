@@ -218,3 +218,4 @@ export const VerificationPage: React.FC<VerificationPageProps> = ({ data, onRefr
     </div>
   );
 };
+

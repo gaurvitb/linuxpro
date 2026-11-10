@@ -22,3 +22,4 @@ find "${DEST}" -name 'backup_*.tar.gz' -mtime +7 -delete
 logger -t backup "LINUXPULSE Backup ${STAMP} completed successfully: ${ARCHIVE}"
 
 exit 0
+

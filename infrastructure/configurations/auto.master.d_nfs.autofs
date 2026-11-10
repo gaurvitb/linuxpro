@@ -3,3 +3,4 @@
 # Target: /etc/auto.master.d/nfs.autofs on server2.example.com
 # ==============================================================================
 /mnt/nfs /etc/auto.nfs --timeout=60
+

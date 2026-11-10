@@ -12,3 +12,4 @@ Write-Host ""
 Write-Host "Both processes initiated in separate windows:" -ForegroundColor Green
 Write-Host "  - Frontend UI Dashboard: http://localhost:5173" -ForegroundColor Green
 Write-Host "  - Backend API & Docs:    http://localhost:8000/docs" -ForegroundColor Green
+

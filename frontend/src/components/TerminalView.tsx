@@ -68,3 +68,4 @@ export const TerminalView: React.FC<TerminalViewProps> = ({
     </div>
   );
 };
+

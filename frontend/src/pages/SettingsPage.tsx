@@ -144,3 +144,4 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ mode, onToggleMode, 
     </div>
   );
 };
+

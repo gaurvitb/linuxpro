@@ -169,3 +169,4 @@ export const MonitoringPage: React.FC<MonitoringPageProps> = ({ servers, onRefre
     </div>
   );
 };
+
